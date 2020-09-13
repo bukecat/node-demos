@@ -1,5 +1,5 @@
 .idea
 
-node-test/.idea
+*/.idea
 
-node-test/node_modules
+*/node_modules
