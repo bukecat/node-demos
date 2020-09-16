@@ -41,10 +41,14 @@ server.use(
 
 server.use(
   mount('/test.js', (ctx) => {
-    // ctx.cookies.set('jk', 'jk', {
-    //   httpOnly: false,
-    // httpOnly: true,
-    // });
+    ctx.cookies.set('jk', 'jk', {
+      // httpOnly: false,
+      httpOnly: true,
+      // sameSite: 'strict',
+      sameSite: 'lax',
+      // sameSite: 'none',
+      // secure: true,
+    });
 
     ctx.set({
       'Content-Type': 'text/javascript',
