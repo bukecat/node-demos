@@ -42,12 +42,18 @@ server.use(
 server.use(
   mount('/test.js', (ctx) => {
     // ctx.cookies.set('jk', 'jk', {
-    //   httpOnly: true,
+    //   httpOnly: false,
+    // httpOnly: true,
     // });
+
     ctx.set({
       'Content-Type': 'text/javascript',
       'Cache-Control': 'max-age=5', // 浏览器缓存时间
     });
+
+    const js = fs.readFileSync('test.js', 'utf8');
+
+    ctx.body = js;
 
     ctx.status = 200;
   }),
