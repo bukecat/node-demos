@@ -42,6 +42,15 @@ server.use(
 
 server.use(
   mount('/test.html', (ctx) => {
+    ctx.cookies.set('jk', 'jk', {
+      // httpOnly: false,
+      httpOnly: true,
+      sameSite: 'strict',
+      // sameSite: 'lax',
+      // sameSite: 'none',
+      // secure: true,
+      // path: '/asda',
+    });
     const html = fs.readFileSync('test.html', 'utf8');
 
     ctx.body = html;
@@ -52,16 +61,6 @@ server.use(
 
 server.use(
   mount('/test.js', (ctx) => {
-    ctx.cookies.set('jk', 'jk', {
-      // httpOnly: false,
-      httpOnly: true,
-      // sameSite: 'strict',
-      // sameSite: 'lax',
-      // sameSite: 'none',
-      // secure: true,
-      path: '/asda',
-    });
-
     ctx.set({
       'Content-Type': 'text/javascript',
       'Cache-Control': 'max-age=5', // 浏览器缓存时间
