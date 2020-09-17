@@ -1,5 +1,6 @@
 // const http = require('http');
 const fs = require('fs');
+const path = require('path');
 const Koa = require('koa');
 const mount = require('koa-mount');
 
@@ -10,6 +11,16 @@ const server = new Koa();
 
 server.use(
   (ctx, next) => {
+    try {
+      if (ctx.url !== '/favicon.ico') {
+        fs.readFileSync(path.join(__dirname, ctx.url));
+      }
+    } catch (e) {
+      ctx.status = 404;
+      ctx.body = `${ctx.url} not found`;
+      return;
+    }
+
     ctx.status = 200;
     ctx.set('ETag', hash);
 
@@ -45,9 +56,10 @@ server.use(
       // httpOnly: false,
       httpOnly: true,
       // sameSite: 'strict',
-      sameSite: 'lax',
+      // sameSite: 'lax',
       // sameSite: 'none',
       // secure: true,
+      path: '/asda',
     });
 
     ctx.set({
